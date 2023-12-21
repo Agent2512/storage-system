@@ -1,6 +1,4 @@
-import cookie from "@elysiajs/cookie";
 import { html, Html } from "@elysiajs/html";
-import jwt from "@elysiajs/jwt";
 import Elysia from "elysia";
 import { indexApp } from "./pages/indexApp";
 import { itemApp } from "./pages/itemApp";
@@ -10,29 +8,11 @@ import { scriptServer } from "./scripts/scriptServer";
 const app = new Elysia({})
     .get("/styles.css", () => Bun.file("./tailwind-gen/styles.css"))
     .use(scriptServer)
-    .use(
-        jwt({
-            name: 'jwt',
-            secret: process.env.JWT_SECRET || "secret",
-            expiresIn: "15d",
-            algorithm: "HS512",
-        })
-    )
-    .use(cookie({
-        httpOnly: true,
-    }))
     .use(html())
+    .use(userApp)
     .use(indexApp)
     .use(itemApp)
-    .use(userApp)
-    .get("/auth/:user", async ({ jwt, cookie, setCookie, params, set }) => {
-        setCookie('auth', await jwt.sign(params), {
-            httpOnly: true,
-            maxAge: 7 * 86400,
-        })
 
-        return set.redirect = "/"
-    })
 
 
 app.listen(3000);

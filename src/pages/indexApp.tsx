@@ -1,17 +1,11 @@
 import Elysia from "elysia";
 import { Block1, Block2 } from "../components/block";
 import { BaceHtml } from "../server";
-
-const test = (_: any) => {
-    const authCookie = _.cookie.auth
-    console.log(authCookie)
-
-
-}
+import { auth } from "../utils/auth";
 
 export const indexApp = new Elysia()
-    .get("/", () => indexPage(), { beforeHandle: test })
-    .get("/qr", () => qrPage(),)
+    .get("/", () => indexPage(), { beforeHandle: auth })
+    .get("/qr", () => qrPage(), { beforeHandle: auth })
 
 
 const indexPage = () => (
