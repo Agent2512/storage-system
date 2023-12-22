@@ -23,7 +23,7 @@ export const Block8 = (p: {
 );
 
 export const Block4 = (p: {
-    children: any,
+    children?: any,
 
     card1: CardProps,
     card2: CardProps,
@@ -42,7 +42,7 @@ export const Block4 = (p: {
 );
 
 export const Block3 = (p: {
-    children: any,
+    children?: any,
 
     card1: CardProps,
     card2: CardProps,
@@ -59,7 +59,7 @@ export const Block3 = (p: {
 );
 
 export const Block2 = (p: {
-    children: any,
+    children?: any,
 
     card1: CardProps,
     card2: CardProps,
@@ -74,7 +74,7 @@ export const Block2 = (p: {
 );
 
 export const Block1 = (p: {
-    children: any,
+    children?: any,
 
     card1: CardProps,
 }) => (
