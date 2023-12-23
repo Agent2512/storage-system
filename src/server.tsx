@@ -5,8 +5,19 @@ import { itemApp } from "./pages/itemApp";
 import { userApp } from "./pages/userApp";
 import { scriptServer } from "./scripts/scriptServer";
 
+const normalCssFile = Bun.file("./tailwind-gen/styles.css")
+const cssExists = await normalCssFile.exists();
+
 const app = new Elysia({})
-    .get("/styles.css", () => Bun.file("./tailwind-gen/styles.css"))
+    .get("/styles.css", async () => {
+
+
+        if (!cssExists) {
+            return Bun.file("./src/styles.css")
+        }
+
+        return normalCssFile
+    })
     .use(scriptServer)
     .use(html())
     .use(userApp)
@@ -47,6 +58,8 @@ export const BaceHtml = ({ children }: any) => (
             <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
             <link href="https://unpkg.com/css.gg/icons/icons.css" rel="stylesheet" />
+
+            {!cssExists && <script src="https://cdn.tailwindcss.com"></script>}
 
             <link href="/styles.css" rel="stylesheet" />
         </head>
